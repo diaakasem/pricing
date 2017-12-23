@@ -1,5 +1,5 @@
 {
-  "name": "package-price",
+  "name": "pricing",
   "version": "1.0.0",
   "description": "Pricing a package",
   "main": "index.js",
