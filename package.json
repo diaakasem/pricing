@@ -8,16 +8,15 @@
     "autotest": "mocha -w ./ test/*Test.js",
     "jsdocs": "jsdoc ."
   },
-  "author": "",
+  "author": "Diaa Kasem <me@diaa.me>",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.2",
-    "chai-sinon": "^2.8.1",
     "jsdoc": "^3.5.5",
+    "lodash": "^4.17.4",
     "mocha": "^4.0.1",
-    "sinon": "^4.1.3"
+    "sinon": "^4.1.3",
+    "sinon-chai": "^2.14.0"
   },
-  "dependencies": {
-    "lodash": "^4.17.4"
-  }
+  "dependencies": {}
 }
