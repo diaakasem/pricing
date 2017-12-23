@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*Test.js",
-    "autotest": "mocha -w ./ test/*Test.js"
+    "autotest": "mocha -w ./ test/*Test.js",
+    "jsdocs": "jsdoc ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-sinon": "^2.8.1",
+    "jsdoc": "^3.5.5",
     "mocha": "^4.0.1",
     "sinon": "^4.1.3"
   },

@@ -4,9 +4,9 @@ const mRoundBase = 25;
 
 /**
  * Round to the nearest <to>
- * @param val The original value
- * @param to the value to round to
- * @return the calculated value
+ * @param {Number} val The original value
+ * @param {Number} to the value to round to
+ * @return {Number} the calculated value
  */
 module.exports.mround = (val, to)=> {
     if (!to || to < 1) {

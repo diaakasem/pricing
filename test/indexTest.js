@@ -17,36 +17,39 @@ describe('Price', function() {
         let expectations = [
             { name: 'free', users: 1, months: 1, price: 0, packageIndex: 0},
 
-            { name: 'basic', users: 1, months: 1, packageIndex: 1, price: 50},
-            { name: 'basic', users: 3, months: 1, packageIndex: 1, price: 150},
-            { name: 'basic', users: 5, months: 1, packageIndex: 1, price: 200},
-            { name: 'basic', users: 10, months: 1, packageIndex: 1, price: 300},
+            // Basic
+            { name: 'basic', users: 1, months: 1, packageIndex: 1, price: 50, roundingBase: 2.5},
             { name: 'basic', users: 1, months: 12, packageIndex: 1, price: 300},
-            { name: 'basic', users: 3, months: 12, packageIndex: 1, price: 800},
-            { name: 'basic', users: 5, months: 12, packageIndex: 1, price: 1300},
+            { name: 'basic', users: 3, months: 1, packageIndex: 1, price: 100},
+            { name: 'basic', users: 3, months: 12, packageIndex: 1, price: 750},
+            { name: 'basic', users: 5, months: 1, packageIndex: 1, price: 150},
+            { name: 'basic', users: 5, months: 12, packageIndex: 1, price: 1250},
+            { name: 'basic', users: 10, months: 1, packageIndex: 1, price: 250},
             { name: 'basic', users: 10, months: 12, packageIndex: 1, price: 2450},
 
-            { name: 'advanced', users: 1, months: 1, packageIndex: 1, price: 100},
-            { name: 'advanced', users: 3, months: 1, packageIndex: 1, price: 200},
-            { name: 'advanced', users: 5, months: 1, packageIndex: 1, price: 300},
-            { name: 'advanced', users: 10, months: 1, packageIndex: 1, price: 500},
-            { name: 'advanced', users: 1, months: 12, packageIndex: 1, price: 550},
-            { name: 'advanced', users: 3, months: 12, packageIndex: 1, price: 1500},
-            { name: 'advanced', users: 5, months: 12, packageIndex: 1, price: 2450},
-            { name: 'advanced', users: 10, months: 12, packageIndex: 1, price: 4850},
+            // Advanced
+            { name: 'advanced', users: 1, months: 1, packageIndex: 2, price: 75, roundingBase: 2.5},
+            { name: 'advanced', users: 1, months: 12, packageIndex: 2, price: 550},
+            { name: 'advanced', users: 3, months: 1, packageIndex: 2, price: 150},
+            { name: 'advanced', users: 3, months: 12, packageIndex: 2, price: 1500},
+            { name: 'advanced', users: 5, months: 1, packageIndex: 2, price: 250},
+            { name: 'advanced', users: 5, months: 12, packageIndex: 2, price: 2450},
+            { name: 'advanced', users: 10, months: 1, packageIndex: 2, price: 450},
+            { name: 'advanced', users: 10, months: 12, packageIndex: 2, price: 4850},
 
-            { name: 'extreme', users: 1, months: 1, packageIndex: 1, price: 150},
-            { name: 'extreme', users: 3, months: 1, packageIndex: 1, price: 250},
-            { name: 'extreme', users: 5, months: 1, packageIndex: 1, price: 400},
-            { name: 'extreme', users: 10, months: 1, packageIndex: 1, price: 700},
-            { name: 'extreme', users: 1, months: 12, packageIndex: 1, price: 800},
-            { name: 'extreme', users: 3, months: 12, packageIndex: 1, price: 2250},
-            { name: 'extreme', users: 5, months: 12, packageIndex: 1, price: 3650},
-            { name: 'extreme', users: 10, months: 12, packageIndex: 1, price: 7240},
+            // Extreme
+            { name: 'extreme', users: 1, months: 1, packageIndex: 3, price: 100, roundingBase: 2.5},
+            { name: 'extreme', users: 1, months: 12, packageIndex: 3, price: 750},
+            { name: 'extreme', users: 3, months: 1, packageIndex: 3, price: 250},
+            { name: 'extreme', users: 3, months: 12, packageIndex: 3, price: 2200},
+            { name: 'extreme', users: 5, months: 1, packageIndex: 3, price: 350},
+            { name: 'extreme', users: 5, months: 12, packageIndex: 3, price: 3650},
+            { name: 'extreme', users: 10, months: 1, packageIndex: 3, price: 650},
+            { name: 'extreme', users: 10, months: 12, packageIndex: 3, price: 7250},
         ]
         _.each(expectations, (e)=> {
             it(`Should return ${e.price} for ${e.users} user paying every ${e.months} for ${e.name} package`, function() {
-                let price = Pricing.price(e.packageIndex, e.users, e.months);
+                let price = Pricing.price(e.packageIndex, e.users, e.months, e.roundingBase);
                 expect(price).to.equal(e.price);
             });
         });
