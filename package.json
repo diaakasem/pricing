@@ -1,15 +1,36 @@
 {
   "name": "pricing",
   "version": "1.0.0",
-  "description": "Pricing a package",
+  "description": "Pricing a commercial package",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*Test.js",
     "autotest": "mocha -w ./ test/*Test.js",
     "jsdocs": "jsdoc ."
   },
-  "author": "Diaa Kasem <me@diaa.me>",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/diaakasem/pricing.git"
+  },
+  "author": {
+    "name": "Diaa Kasem",
+    "email": "me@diaa.me",
+    "url": "http://diaa.me"
+  },
+  "bugs": {
+    "url": "https://github.com/diaakasem/pricing/issues"
+  },
+  "homepage": "https://github.com/diaakasem/pricing#readme",
+  "keywords": [
+    "package",
+    "pricing"
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "license": "MIT",
+  "bundleDependencies": false,
+  "deprecated": false,
   "devDependencies": {
     "chai": "^4.1.2",
     "jsdoc": "^3.5.5",
