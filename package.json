@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha test/*Test.js",
     "autotest": "mocha -w ./ test/*Test.js",
-    "prepublish": "npm run build && git commit -am 'Auto Build' && npm-auto-version",
+    "prepublish": "npm run build && git commit -am 'Auto Build'; npm-auto-version",
     "postpublish": "git push origin --tags",
     "build": "browserify index.js --standalone pricing > bundle.js",
     "jsdocs": "jsdoc ."
