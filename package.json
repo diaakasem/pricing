@@ -1,15 +1,18 @@
 {
   "name": "pricing",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Pricing a commercial package",
   "main": "bundle.js",
   "scripts": {
-    "test": "mocha test/*Test.js",
+    "test": "mocha --require babel-core/register test/*Test.js",
     "autotest": "mocha -w ./ test/*Test.js",
-    "prepublish": "npm run build && git commit -am 'Auto Build'; npm-auto-version",
+
+    "jsdocs": "jsdoc src -d docs",
+    "prepublish": "npm run jsdocs && npm run build && git commit -am 'Auto Build'; npm-auto-version",
     "postpublish": "git push origin --tags",
-    "build": "browserify index.js --standalone pricing > bundle.js",
-    "jsdocs": "jsdoc ."
+
+    "clean": "rm -rf dist",
+    "build": "npm run clean && mkdir -p dist && babel src -s -d dist"
   },
   "repository": {
     "type": "git",
@@ -35,6 +38,12 @@
   "bundleDependencies": false,
   "deprecated": false,
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-minify": "^0.2.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "browserify": "^14.5.0",
     "chai": "^4.1.2",
     "jsdoc": "^3.5.5",

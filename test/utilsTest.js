@@ -1,5 +1,6 @@
 'use strict';
 
+require('babel-register');
 var _ = require('lodash');
 var chai = require('chai');
 var sinon = require('sinon');
@@ -7,7 +8,8 @@ var sinonChai = require("sinon-chai");
 var expect = chai.expect;
 chai.use(sinonChai);
 
-const utils = require('../utils');
+import Utils from '../src/utils';
+let utils = new Utils(false, 25);
 
 describe('mround', function() {
     it('Should Exist', function() {
