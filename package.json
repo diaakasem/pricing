@@ -1,6 +1,6 @@
 {
   "name": "pricing",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Pricing a commercial package",
   "main": "bundle.js",
   "scripts": {
