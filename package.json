@@ -1,13 +1,14 @@
 {
   "name": "pricing",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pricing a commercial package",
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*Test.js",
     "autotest": "mocha -w ./ test/*Test.js",
-    "prepublish": "npm-auto-version",
+    "prepublish": "npm run build && git commit -am 'Auto Build' && npm-auto-version",
     "postpublish": "git push origin --tags",
+    "build": "browserify index.js --standalone pricing > bundle.js",
     "jsdocs": "jsdoc ."
   },
   "repository": {
@@ -34,6 +35,7 @@
   "bundleDependencies": false,
   "deprecated": false,
   "devDependencies": {
+    "browserify": "^14.5.0",
     "chai": "^4.1.2",
     "jsdoc": "^3.5.5",
     "lodash": "^4.17.4",
