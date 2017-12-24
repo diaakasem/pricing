@@ -1,8 +1,8 @@
 {
   "name": "pricing",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Pricing a commercial package",
-  "main": "index.js",
+  "main": "bundle.js",
   "scripts": {
     "test": "mocha test/*Test.js",
     "autotest": "mocha -w ./ test/*Test.js",
