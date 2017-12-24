@@ -20,7 +20,7 @@ const additionalTaxes = 0.14;
 // Set Safty Margin .. in case we miss something
 const saftyMargin = 0.1;
 
-const DEBUG = true;
+const DEBUG = false;
 function log(name, value) {
     console.error(name, value);
 };
