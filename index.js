@@ -22,8 +22,10 @@ const saftyMargin = 0.1;
 
 const DEBUG = false;
 function log(name, value) {
-    console.error(name, value);
-};
+    if (DEBUG) {
+        console.error(name, value);
+    }
+}
 
 /**
  * Calculates the payfort fees used to transfer money from user's CC to
