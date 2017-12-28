@@ -73,7 +73,38 @@ export default class PackagePricing {
      * each packageIndex has more features than the ones before
      * @param {Number} users Buying for how many users. must be > 0
      * @param {Number} months 1 -to- 12
-     * @return {Number} The price
+     * @param {Number} roundingBase - The priceBase is rounded to 10 and then
+     * multiplied by this roundingBase, so that you expect the price to be
+     * multiple of say ( 25 ) if the price base is 13 and the rounding base is
+     * 2.5. or package is multiple of ( 50 ) if the price base is 14.5 and the
+     * roundingBase is 5 ..  etc..
+     * @return {Object} The price information object. ex.
+     * if inputs are
+     *  {
+     *       name: 'Some Name',
+     *       users: 1,
+     *       months: 1,
+     *       packageIndex: 1,
+     *       roundingBase: 2.5
+     *  }
+     *
+     * result would be
+     *  {
+     *      "EGP": {
+     *          "originalPrice": 600,
+     *          "price": 50,
+     *          "priceAnnually": 600,
+     *          "saving": 0,
+     *          "savingPercent": 0,
+     *      },
+     *      "USD": {
+     *          "originalPrice": 36,
+     *          "price": 3,
+     *          "priceAnnually": 36,
+     *          "saving": 0,
+     *          "savingPercent": 0,
+     *      }
+     *  }
      */
     price(packageIndex, users, months, roundingBase) {
         // Free Package
@@ -144,6 +175,26 @@ export default class PackagePricing {
         };
     };
 
+    /**
+     * Calculates savings for a package per user annually.
+     *
+     * @param {Number} packageIndex The package index to multiple to for pricing
+     * @param {Number} price The price already calculated for the package
+     * @param {Number} users The count of users for this package
+     * @param {Number} months The period of periodical payment for user
+     * @param {String} currency Either "USD" or "EGP"
+     * @return {Object} The savings object. ex.
+     * {
+     *      packageIndex: 1,
+     *      originalPrice: 150,
+     *      price: 100,
+     *      users: 3,
+     *      months: 1,
+     *      currency: 'EGP',
+     *      saving: 50,
+     *      percent: 0.33
+     *  }
+     */
     calcSavings(packageIndex, price, users, months, currency) {
         let singleUserPaysMonthly = (price / users) / months;
         this.utils.log('Single User Pays Monthly', singleUserPaysMonthly);
