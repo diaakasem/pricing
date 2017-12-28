@@ -19,7 +19,7 @@ var PackagePricing = function () {
         _classCallCheck(this, PackagePricing);
 
         //DEBUG
-        this.utils = new _utils2.default(true, 25);
+        this.utils = new _utils2.default(false, 25);
         // Based on the 80/20 rule .. doubled
         this.peopleToReachSinglePayer = 25;
         // Price per 1 USD in EGP
@@ -105,10 +105,18 @@ var PackagePricing = function () {
             // Free Package
             if (packageIndex === 0) {
                 return {
-                    priceInEgp: 0,
-                    savingInEgp: 0,
-                    savingPercent: 0,
-                    priceInUsd: 0
+                    'EGP': {
+                        originalPrice: 0,
+                        price: 0,
+                        saving: 0,
+                        savingPercent: 0
+                    },
+                    'USD': {
+                        originalPrice: 0,
+                        price: 0,
+                        saving: 0,
+                        savingPercent: 0
+                    }
                 };
             }
             this.utils.log('Arguments', {
@@ -119,7 +127,7 @@ var PackagePricing = function () {
             // Pricing rounding base
             var roundBase = this.utils.mround(this.priceBase, 10) * (roundingBase || this.defaultRoundingBase);
             // USD Pricing rounding base
-            var usdRoundBase = 3;
+            var usdRoundBase = 3 * packageIndex;
             this.utils.log('Round Base', roundBase);
             var basePackagePrice = packageIndex * this.priceBase;
             this.utils.log('Base Package Price', basePackagePrice);
@@ -142,24 +150,55 @@ var PackagePricing = function () {
             this.utils.log('Original Price In USD', originalPriceInUsd);
             var priceInUsd = this.utils.mround(originalPriceInUsd + usdRoundBase / 2, usdRoundBase);
             this.utils.log('Price In USD', priceInUsd);
-            var baseSavingPrice = this.utils.mround(roundBase + roundBase / 2, roundBase) * 12;
-            if (!(users === 1 && months === 1 && packageIndex === 1)) {
-                baseSavingPrice = this.price(1, 1, 1).priceInEgp * 12;
-            }
-            this.utils.log('Base Savinig Price', baseSavingPrice);
+            var savingsEGP = this.calcSavings(packageIndex, price, users, months, 'EGP');
+            var savingsUSD = this.calcSavings(packageIndex, priceInUsd, users, months, 'usd');
+            return {
+                'EGP': {
+                    priceAnnually: price * (12 / months),
+                    originalPrice: savingsEGP.originalPrice,
+                    price: price,
+                    saving: savingsEGP.saving,
+                    savingPercent: parseFloat(savingsEGP.percent.toFixed(2))
+                },
+                'USD': {
+                    priceAnnually: priceInUsd * (12 / months),
+                    originalPrice: savingsUSD.originalPrice,
+                    price: priceInUsd,
+                    saving: savingsUSD.saving,
+                    savingPercent: parseFloat(savingsUSD.percent.toFixed(2))
+                }
+            };
+        }
+    }, {
+        key: 'calcSavings',
+        value: function calcSavings(packageIndex, price, users, months, currency) {
             var singleUserPaysMonthly = price / users / months;
             this.utils.log('Single User Pays Monthly', singleUserPaysMonthly);
             var singleUserPaysAnnually = singleUserPaysMonthly * 12;
             this.utils.log('Single User Pays Annually', singleUserPaysAnnually);
-            var youSave = baseSavingPrice - singleUserPaysAnnually;
+            var youPayAnnually = singleUserPaysAnnually * users;
+            var baseSavingPrice = youPayAnnually;
+            if (!(users === 1 && months === 1)) {
+                if (currency.toLowerCase() === 'egp') {
+                    baseSavingPrice = this.price(packageIndex, 1, 1).EGP.price * 12 * users;
+                } else {
+                    baseSavingPrice = this.price(packageIndex, 1, 1).USD.price * 12 * users;
+                }
+            }
+            this.utils.log('Base Savinig Price', baseSavingPrice);
+            var youSave = baseSavingPrice - youPayAnnually;
             this.utils.log('You Save', youSave);
-            var savingPercent = youSave / (singleUserPaysAnnually + youSave);
+            var savingPercent = youSave / baseSavingPrice;
             this.utils.log('Saving Percent', savingPercent);
             return {
-                priceInEgp: price,
-                priceInUsd: priceInUsd,
-                savingInEgp: youSave,
-                savingPercent: savingPercent
+                packageIndex: packageIndex,
+                originalPrice: baseSavingPrice,
+                price: price,
+                users: users,
+                months: months,
+                currency: currency.toUpperCase(),
+                saving: youSave,
+                percent: savingPercent
             };
         }
     }]);
