@@ -1,11 +1,11 @@
 {
   "name": "pricing",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Pricing a commercial package",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha --require babel-core/register test/*Test.js",
-    "autotest": "mocha -w ./ test/*Test.js",
+    "autotest": "mocha --require babel-core/register -w ./ test/*Test.js",
     "jsdocs": "jsdoc src -d docs",
     "prepublish": "npm run jsdocs && npm run build && git commit -am 'Auto Build'; npm-auto-version",
     "postpublish": "git push origin --tags",
