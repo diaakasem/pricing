@@ -79,10 +79,18 @@ export default class PackagePricing {
         // Free Package
         if (packageIndex === 0) {
             return {
-                priceInEgp: 0,
-                savingInEgp: 0,
-                savingPercent: 0,
-                priceInUsd: 0
+                'EGP': {
+                    originalPrice: 0,
+                    price: 0,
+                    saving: 0,
+                    savingPercent: 0
+                },
+                'USD': {
+                    originalPrice: 0,
+                    price: 0,
+                    saving: 0,
+                    savingPercent: 0
+                }
             };
         }
         this.utils.log('Arguments', {
@@ -116,26 +124,54 @@ export default class PackagePricing {
         this.utils.log('Original Price In USD', originalPriceInUsd);
         let priceInUsd = this.utils.mround(originalPriceInUsd + (usdRoundBase/2), usdRoundBase);
         this.utils.log('Price In USD', priceInUsd);
+        let savingsEGP = this.calcSavings(packageIndex, price, users, months, 'EGP');
+        let savingsUSD = this.calcSavings(packageIndex, priceInUsd, users, months, 'usd');
+        return {
+            'EGP': {
+                priceAnnually: price * (12/months),
+                originalPrice: savingsEGP.originalPrice,
+                price: price,
+                saving: savingsEGP.saving,
+                savingPercent: parseFloat(savingsEGP.percent.toFixed(2))
+            },
+            'USD': {
+                priceAnnually: priceInUsd * (12/months),
+                originalPrice: savingsUSD.originalPrice,
+                price: priceInUsd,
+                saving: savingsUSD.saving,
+                savingPercent: parseFloat(savingsUSD.percent.toFixed(2))
+            }
+        };
+    };
 
+    calcSavings(packageIndex, price, users, months, currency) {
         let singleUserPaysMonthly = (price / users) / months;
         this.utils.log('Single User Pays Monthly', singleUserPaysMonthly);
         let singleUserPaysAnnually = singleUserPaysMonthly * 12;
         this.utils.log('Single User Pays Annually', singleUserPaysAnnually);
-
-        let baseSavingPrice = singleUserPaysAnnually;
+        let youPayAnnually = singleUserPaysAnnually * users;
+        let baseSavingPrice = youPayAnnually;
         if (!(users === 1 && months === 1)) {
-            baseSavingPrice = this.price(packageIndex, 1, 1).priceInEgp * 12;
+            if (currency.toLowerCase() === 'egp') {
+                baseSavingPrice = this.price(packageIndex, 1, 1).EGP.price * 12 * users;
+            } else {
+                baseSavingPrice = this.price(packageIndex, 1, 1).USD.price * 12 * users;
+            }
         }
         this.utils.log('Base Savinig Price', baseSavingPrice);
-        let youSave = baseSavingPrice - singleUserPaysAnnually ;
+        let youSave = baseSavingPrice - youPayAnnually;
         this.utils.log('You Save', youSave);
-        let savingPercent = youSave/(singleUserPaysAnnually + youSave)
+        let savingPercent = youSave/baseSavingPrice
         this.utils.log('Saving Percent', savingPercent);
         return {
-            priceInEgp: price,
-            priceInUsd: priceInUsd,
-            savingInEgp: youSave,
-            savingPercent: parseFloat(savingPercent.toFixed(2)),
+            packageIndex: packageIndex,
+            originalPrice: baseSavingPrice,
+            price: price,
+            users: users,
+            months: months,
+            currency: currency.toUpperCase(),
+            saving: youSave,
+            percent: savingPercent
         };
-    };
+    }
 };
