@@ -18,7 +18,8 @@ var PackagePricing = function () {
     function PackagePricing() {
         _classCallCheck(this, PackagePricing);
 
-        this.utils = new _utils2.default(false, 25);
+        //DEBUG
+        this.utils = new _utils2.default(true, 25);
         // Based on the 80/20 rule .. doubled
         this.peopleToReachSinglePayer = 25;
         // Price per 1 USD in EGP
@@ -89,9 +90,6 @@ var PackagePricing = function () {
             this.utils.log("SMS Cost per Buyer", smsCostUntilWeGetToABuyer);
             return Math.round(fbAdPerAccount + smsCostUntilWeGetToABuyer);
         }
-    }, {
-        key: 'price',
-
 
         /**
          * @param {Number} packageIndex 0 ( free ) 1 ( basic ) 2 ( advanced ) 3 ( extreme )
@@ -100,10 +98,18 @@ var PackagePricing = function () {
          * @param {Number} months 1 -to- 12
          * @return {Number} The price
          */
+
+    }, {
+        key: 'price',
         value: function price(packageIndex, users, months, roundingBase) {
             // Free Package
             if (packageIndex === 0) {
-                return 0;
+                return {
+                    priceInEgp: 0,
+                    savingInEgp: 0,
+                    savingPercent: 0,
+                    priceInUsd: 0
+                };
             }
             this.utils.log('Arguments', {
                 index: packageIndex,
@@ -112,6 +118,8 @@ var PackagePricing = function () {
             });
             // Pricing rounding base
             var roundBase = this.utils.mround(this.priceBase, 10) * (roundingBase || this.defaultRoundingBase);
+            // USD Pricing rounding base
+            var usdRoundBase = 3;
             this.utils.log('Round Base', roundBase);
             var basePackagePrice = packageIndex * this.priceBase;
             this.utils.log('Base Package Price', basePackagePrice);
@@ -130,7 +138,29 @@ var PackagePricing = function () {
             this.utils.log('Gross', gross);
             var price = this.utils.mround(gross + roundBase / 2, roundBase);
             this.utils.log('Price', price);
-            return price;
+            var originalPriceInUsd = price / this.sellUSD;
+            this.utils.log('Original Price In USD', originalPriceInUsd);
+            var priceInUsd = this.utils.mround(originalPriceInUsd + usdRoundBase / 2, usdRoundBase);
+            this.utils.log('Price In USD', priceInUsd);
+            var baseSavingPrice = this.utils.mround(roundBase + roundBase / 2, roundBase) * 12;
+            if (!(users === 1 && months === 1 && packageIndex === 1)) {
+                baseSavingPrice = this.price(1, 1, 1).priceInEgp * 12;
+            }
+            this.utils.log('Base Savinig Price', baseSavingPrice);
+            var singleUserPaysMonthly = price / users / months;
+            this.utils.log('Single User Pays Monthly', singleUserPaysMonthly);
+            var singleUserPaysAnnually = singleUserPaysMonthly * 12;
+            this.utils.log('Single User Pays Annually', singleUserPaysAnnually);
+            var youSave = baseSavingPrice - singleUserPaysAnnually;
+            this.utils.log('You Save', youSave);
+            var savingPercent = youSave / (singleUserPaysAnnually + youSave);
+            this.utils.log('Saving Percent', savingPercent);
+            return {
+                priceInEgp: price,
+                priceInUsd: priceInUsd,
+                savingInEgp: youSave,
+                savingPercent: savingPercent
+            };
         }
     }]);
 
