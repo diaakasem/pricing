@@ -358,6 +358,265 @@ company's bank account
     
 
     
+    <h4 class="name" id="calcSavings"><span class="type-signature"></span>calcSavings<span class="signature">(packageIndex, price, users, months, currency)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Calculates savings for a package per user annually.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>packageIndex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The package index to multiple to for pricing</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>price</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The price already calculated for the package</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>users</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The count of users for this package</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>months</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The period of periodical payment for user</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>currency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Either "USD" or "EGP"</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line198">line 198</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The savings object. ex.
+{
+     packageIndex: 1,
+     originalPrice: 150,
+     price: 100,
+     users: 3,
+     months: 1,
+     currency: 'EGP',
+     saving: 50,
+     percent: 0.33
+ }
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="calcTaxes"><span class="type-signature"></span>calcTaxes<span class="signature">(amount)</span><span class="type-signature"> &rarr; {Number}</span></h4>
     
 
@@ -695,7 +954,7 @@ company's bank account
     
 
     
-    <h4 class="name" id="price"><span class="type-signature"></span>price<span class="signature">(packageIndex, users, months)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="price"><span class="type-signature"></span>price<span class="signature">(packageIndex, users, months, roundingBase)</span><span class="type-signature"> &rarr; {Object}</span></h4>
     
 
     
@@ -802,6 +1061,33 @@ each packageIndex has more features than the ones before</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>roundingBase</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The priceBase is rounded to 10 and then
+multiplied by this roundingBase, so that you expect the price to be
+multiple of say ( 25 ) if the price base is 13 and the rounding base is
+2.5. or package is multiple of ( 50 ) if the price base is 14.5 and the
+roundingBase is 5 ..  etc..</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -839,7 +1125,7 @@ each packageIndex has more features than the ones before</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line78">line 78</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -866,7 +1152,33 @@ each packageIndex has more features than the ones before</td>
 
         
 <div class="param-desc">
-    The price
+    The price information object. ex.
+if inputs are
+ {
+      name: 'Some Name',
+      users: 1,
+      months: 1,
+      packageIndex: 1,
+      roundingBase: 2.5
+ }
+
+result would be
+ {
+     "EGP": {
+         "originalPrice": 600,
+         "price": 50,
+         "priceAnnually": 600,
+         "saving": 0,
+         "savingPercent": 0,
+     },
+     "USD": {
+         "originalPrice": 36,
+         "price": 3,
+         "priceAnnually": 36,
+         "saving": 0,
+         "savingPercent": 0,
+     }
+ }
 </div>
 
 
@@ -877,7 +1189,7 @@ each packageIndex has more features than the ones before</td>
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">Object</span>
 
 
     </dd>
@@ -905,13 +1217,13 @@ each packageIndex has more features than the ones before</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#additionalFees">additionalFees</a></li><li><a href="global.html#calcPayFortFees">calcPayFortFees</a></li><li><a href="global.html#calcTaxes">calcTaxes</a></li><li><a href="global.html#mround">mround</a></li><li><a href="global.html#price">price</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#additionalFees">additionalFees</a></li><li><a href="global.html#calcPayFortFees">calcPayFortFees</a></li><li><a href="global.html#calcSavings">calcSavings</a></li><li><a href="global.html#calcTaxes">calcTaxes</a></li><li><a href="global.html#mround">mround</a></li><li><a href="global.html#price">price</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 28 2017 13:12:22 GMT+0200 (EET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 28 2017 16:05:55 GMT+0200 (EET)
 </footer>
 
 <script> prettyPrint(); </script>
