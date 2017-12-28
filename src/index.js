@@ -6,7 +6,7 @@ export default class PackagePricing {
 
     constructor() {
         //DEBUG
-        this.utils = new Utils(true, 25);
+        this.utils = new Utils(false, 25);
         // Based on the 80/20 rule .. doubled
         this.peopleToReachSinglePayer = 25;
         // Price per 1 USD in EGP
@@ -93,7 +93,7 @@ export default class PackagePricing {
         // Pricing rounding base
         let roundBase = this.utils.mround(this.priceBase, 10) * (roundingBase || this.defaultRoundingBase);
         // USD Pricing rounding base
-        let usdRoundBase = 3;
+        let usdRoundBase = 3 * packageIndex;
         this.utils.log('Round Base', roundBase);
         let basePackagePrice = packageIndex * this.priceBase;
         this.utils.log('Base Package Price', basePackagePrice);
@@ -116,15 +116,17 @@ export default class PackagePricing {
         this.utils.log('Original Price In USD', originalPriceInUsd);
         let priceInUsd = this.utils.mround(originalPriceInUsd + (usdRoundBase/2), usdRoundBase);
         this.utils.log('Price In USD', priceInUsd);
-        let baseSavingPrice = this.utils.mround(roundBase + (roundBase / 2), roundBase) * 12;
-        if (!(users === 1 && months === 1 && packageIndex === 1)) {
-            baseSavingPrice = this.price(1, 1, 1).priceInEgp * 12;
-        }
-        this.utils.log('Base Savinig Price', baseSavingPrice);
+
         let singleUserPaysMonthly = (price / users) / months;
         this.utils.log('Single User Pays Monthly', singleUserPaysMonthly);
         let singleUserPaysAnnually = singleUserPaysMonthly * 12;
         this.utils.log('Single User Pays Annually', singleUserPaysAnnually);
+
+        let baseSavingPrice = singleUserPaysAnnually;
+        if (!(users === 1 && months === 1)) {
+            baseSavingPrice = this.price(packageIndex, 1, 1).priceInEgp * 12;
+        }
+        this.utils.log('Base Savinig Price', baseSavingPrice);
         let youSave = baseSavingPrice - singleUserPaysAnnually ;
         this.utils.log('You Save', youSave);
         let savingPercent = youSave/(singleUserPaysAnnually + youSave)
@@ -133,7 +135,7 @@ export default class PackagePricing {
             priceInEgp: price,
             priceInUsd: priceInUsd,
             savingInEgp: youSave,
-            savingPercent: savingPercent,
+            savingPercent: parseFloat(savingPercent.toFixed(2)),
         };
     };
 };

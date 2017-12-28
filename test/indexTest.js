@@ -44,14 +44,14 @@ describe('Price', function() {
                     "priceInEgp": 100,
                     "priceInUsd": 6,
                     "savingInEgp": 200,
-                    "savingPercent": 0.3333333333333333
+                    "savingPercent": 0.33
                 }
             }, {
                 name: 'basic', users: 3, months: 12, packageIndex: 1, result: {
                     "priceInEgp": 750,
                     "priceInUsd": 45,
                     "savingInEgp": 350,
-                    "savingPercent": 0.5833333333333334,
+                    "savingPercent": 0.58,
                 }
             }, {
                 name: 'basic', users: 5, months: 1, packageIndex: 1, result: {
@@ -65,7 +65,7 @@ describe('Price', function() {
                     "priceInEgp": 1250,
                     "priceInUsd": 75,
                     "savingInEgp": 350,
-                    "savingPercent": 0.5833333333333334,
+                    "savingPercent": 0.58,
                 }
             }, {
                 name: 'basic', users: 10, months: 1, packageIndex: 1, result: {
@@ -79,81 +79,125 @@ describe('Price', function() {
                     "priceInEgp": 2450,
                     "priceInUsd": 147,
                     "savingInEgp": 355,
-                    "savingPercent": 0.5916666666666667,
+                    "savingPercent": 0.59,
                 }
             },
-            /*
             // Advanced
             {
                 name: 'advanced', users: 1, months: 1, packageIndex: 2, roundingBase: 2.5, result: {
-                    price: 75,
+                    "priceInEgp": 75,
+                    "priceInUsd": 6,
+                    "savingInEgp": 0,
+                    "savingPercent": 0,
                 }
             }, {
                 name: 'advanced', users: 1, months: 12, packageIndex: 2, result: {
-                    price: 550
+                    "priceInEgp": 550,
+                    "priceInUsd": 36,
+                    "savingInEgp": 650,
+                    "savingPercent": 0.54,
                 }
             }, {
                 name: 'advanced', users: 3, months: 1, packageIndex: 2, result: {
-                    price: 150
+                    "priceInEgp": 150,
+                    "priceInUsd": 12,
+                    "savingInEgp": 600,
+                    "savingPercent": 0.5,
                 }
             }, {
                 name: 'advanced', users: 3, months: 12, packageIndex: 2, result: {
-                    price: 1500
+                    "priceInEgp": 1500,
+                    "priceInUsd": 90,
+                    "savingInEgp": 700,
+                    "savingPercent": 0.58,
                 }
             }, {
                 name: 'advanced', users: 5, months: 1, packageIndex: 2, result: {
-                    price: 250
+                    "priceInEgp": 250,
+                    "priceInUsd": 18,
+                    "savingInEgp": 600,
+                    "savingPercent": 0.5,
                 }
             }, {
                 name: 'advanced', users: 5, months: 12, packageIndex: 2, result: {
-                    price: 2450
+                    "priceInEgp": 2450,
+                    "priceInUsd": 150,
+                    "savingInEgp": 710,
+                    "savingPercent": 0.59,
                 }
             }, {
                 name: 'advanced', users: 10, months: 1, packageIndex: 2, result: {
-                    price: 450
+                    "priceInEgp": 450,
+                    "priceInUsd": 30,
+                    "savingInEgp": 660,
+                    "savingPercent": 0.55,
                 }
             }, {
                 name: 'advanced', users: 10, months: 12, packageIndex: 2, result: {
-                    price: 4850
+                    "priceInEgp": 4850,
+                    "priceInUsd": 288,
+                    "savingInEgp": 715,
+                    "savingPercent": 0.6,
                 }
             },
-
             // Extreme
             {
                 name: 'extreme', users: 1, months: 1, packageIndex: 3, roundingBase: 2.5, result: {
-                    price: 100,
+                    "priceInEgp": 100,
+                    "priceInUsd": 9,
+                    "savingInEgp": 0,
+                    "savingPercent": 0,
                 }
             }, {
                 name: 'extreme', users: 1, months: 12, packageIndex: 3, result: {
-                    price: 750
+                    "priceInEgp": 750,
+                    "priceInUsd": 45,
+                    "savingInEgp": 450,
+                    "savingPercent": 0.38,
                 }
             }, {
                 name: 'extreme', users: 3, months: 1, packageIndex: 3, result: {
-                    price: 250
+                    "priceInEgp": 250,
+                    "priceInUsd": 18,
+                    "savingInEgp": 200,
+                    "savingPercent": 0.17,
                 }
             }, {
                 name: 'extreme', users: 3, months: 12, packageIndex: 3, result: {
-
-                    price: 2200
+                    "priceInEgp": 2200,
+                    "priceInUsd": 135,
+                    "savingInEgp": 466.66666666666663,
+                    "savingPercent": 0.39,
                 }
             }, {
                 name: 'extreme', users: 5, months: 1, packageIndex: 3, result: {
-                    price: 350
+                    "priceInEgp": 350,
+                    "priceInUsd": 27,
+                    "savingInEgp": 360,
+                    "savingPercent": 0.3,
                 }
             }, {
                 name: 'extreme', users: 5, months: 12, packageIndex: 3, result: {
-                    price: 3650
+                    "priceInEgp": 3650,
+                    "priceInUsd": 216,
+                    "savingInEgp": 470,
+                    "savingPercent": 0.39,
                 }
             }, {
                 name: 'extreme', users: 10, months: 1, packageIndex: 3, result: {
-                    price: 650
+                    "priceInEgp": 650,
+                    "priceInUsd": 45,
+                    "savingInEgp": 420,
+                    "savingPercent": 0.35,
                 }
             }, {
                 name: 'extreme', users: 10, months: 12, packageIndex: 3, result: {
-                    price: 7250
+                    "priceInEgp": 7250,
+                    "priceInUsd": 432,
+                    "savingInEgp": 475,
+                    "savingPercent": 0.4,
                 }
             },
-                */
         ]
         _.each(expectations, (e)=> {
             it(`Should return ${e.result.priceInEgp} for ${e.users} user paying every ${e.months} for ${e.name} package`, function() {
